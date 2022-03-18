@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+
+    <h1>Liste des utilisateurs</h1>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                {# <th>Avatar</th> #}
+                <th>Mentor</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email|lower }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>
+                    {% if user.getImageUrl is not empty %}
+                        <img height="100" width="100" alt="avatar" src="{{ user.getImageUrl }}" />
+                    {% endif %}
+                </td>
+                <td>
+                {% if user.mentor is defined %}
+                    {% if user.mentor %}
+                        {{ user.mentor }}
+                    {% endif %}
+                {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_user_new') }}">Create new</a>
+
+{% endblock %}

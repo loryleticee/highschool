@@ -1,0 +1,56 @@
+
+{{ form_start(form) }}
+    <div class="d-flex flex-column gap-2 text-light">
+        <div class="d-flex flex-column alin-items-center text-center">
+            {{ form_label(form.email, 'Email') }}
+            {{ form_widget(form.email) }}
+        </div>
+        <div class="d-flex flex-column alin-items-center text-center">
+            {{ form_label(form.firstname, "Prénom")}}
+            {{ form_widget(form.firstname) }}
+        </div>
+
+        <div class="d-flex flex-column alin-items-center text-center">
+            {{ form_label(form.lastname, "Nom")}}
+            {{ form_widget(form.lastname) }}
+        </div>
+
+        {% if form.password is defined %}
+            <div class="d-flex flex-column alin-items-center text-center">
+                {{ form_label(form.password, "Mot de passe")}}
+                {{ form_widget(form.password) }}
+            </div>
+        {% endif %}
+
+        <div class="d-flex flex-column alin-items-center text-center">
+            {{ form_label(form.roles, "Roles")}}
+            {{ form_widget(form.roles) }}
+        </div>
+
+        {% if form.mentor is defined %}
+            <div class="d-flex flex-column alin-items-center text-center">
+                {{ form_label(form.mentor, "Mentor")}}
+                {{ form_widget(form.mentor)}}
+            </div>
+        {% endif %}
+
+        <div class="d-flex flex-column alin-items-center text-center">
+           
+            {% if form.image_url.vars.value is not empty %}
+                <img height="100" width="100" alt="avatar" src="{{ form.image_url.vars.value }}" /> 
+                {{ form_widget(form.image_url, { "attr" : { "class": 'visually-hidden'}}) }}
+            {% endif %}
+            
+        </div>
+        {% if form.new_image_url is defined %}
+            <div class="d-flex flex-column alin-items-center text-center">
+                {{ form_label(form.new_image_url, "Remplacer / Ajouter l'avatar")}}
+                {{ form_widget(form.new_image_url) }}
+                {{ form_errors(form.new_image_url) }}
+            </div>
+        {% endif %}
+
+        
+        <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+    </div>
+{{ form_end(form) }}
